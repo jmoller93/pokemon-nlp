@@ -1,5 +1,11 @@
 import cohere
+import pandas as pd
 from sklearn.decomposition import PCA
+
+def add_embed_to_dataframe(df, X, name="Embed"):
+    for idx, data in enumerate(X.T):
+        df[f"{name}_{idx}"] = data
+    return df
 
 # Call the cohere client
 co = cohere.Client('2A0mtCaVSr0HFCBShT3coreZ4kO0tUpGyqq11r7b')
@@ -20,4 +26,6 @@ X_finetuned = pca.fit_transform(response_finetune.embeddings)
 X_normal = pca.fit_transform(response_normal.embeddings)
 
 # Save to dataframe
-
+df = add_embed_to_dataframe(df, X_finetuned, name="Embed_Finetune")
+df = add_embed_to_dataframe(df, X_normal, name="Embed")
+df.to_csv("pokemon_embed.csv")
