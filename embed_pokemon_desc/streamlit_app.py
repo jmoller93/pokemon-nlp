@@ -18,11 +18,13 @@ df = pd.read_csv("pokemon_embed.csv")
 # Split into multiple columns
 col1, col2 = st.columns(2)
 
+# Plot normal model results
 fig_1 = px.scatter(
     df, x="Embed_0", y="Embed_1", color="primary_type", title="Normal Model Embeddings"
 )
 col1.plotly_chart(fig_1)
 
+# Plot fine-tuned model results
 fig_2 = px.scatter(
     df,
     x="Embed_FineTune_0",
